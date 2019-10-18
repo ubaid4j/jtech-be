@@ -3,6 +3,9 @@ package com.ubaid.jtech.chatClientService.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,7 @@ import com.ubaid.jtech.chatClientService.model.User;
 
 @RestController
 @RequestMapping("jtech/sessions")
+@CrossOrigin("*")
 public class SessionController
 {
 	@Autowired
@@ -24,7 +28,7 @@ public class SessionController
 	private UserProxy userProxy;
 	
 	@GetMapping("/{senderId}")
-	public List<Session> getSessionsBySenderId(@PathVariable("senderId") Long senderId)
+	public ResponseEntity<List<Session>> getSessionsBySenderId(@PathVariable("senderId") Long senderId)
 	{
 		List<Session> sessions = sessionProxy.getSessionsBySenderId(senderId);
 		List<User> users = userProxy.getUsers();
@@ -32,6 +36,6 @@ public class SessionController
 			s.setSender(users);
 			s.setReciever(users);
 		});
-		return sessions;
+		return new ResponseEntity<List<Session>>(sessions, HttpStatus.OK);
 	}
 }
