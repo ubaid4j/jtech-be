@@ -20,4 +20,8 @@ public interface MessageProxy {
 	
 	@PostMapping("message-service/jtech/messages/by/session/")
 	public Message saveMessage(@RequestBody Message message);
+	
+	@GetMapping("message-service/jtech/messages/by/session/{sessionId}/user/{userId}")
+	public List<Message> getAllReceivedMessage(@PathVariable("sessionId") Long sessionId,
+			@PathVariable("userId") Long userId);
 }

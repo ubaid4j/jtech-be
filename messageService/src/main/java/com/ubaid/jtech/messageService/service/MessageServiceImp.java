@@ -28,4 +28,9 @@ public class MessageServiceImp implements MessageService
 		return repo.save(message);
 	}
 
+	@Override
+	public List<Message> getReceivedMessages(Long sessionId, Long userId) {
+		return repo.findRecievedMessage(sessionId, userId);
+	}
+
 }

@@ -7,4 +7,12 @@ import java.util.List;
 public interface MessageService {
 	public List<Message> getAllBySessionId(Long sessionId);
 	public Message saveMessage(Message message);
+	/**
+	 * 
+	 * @param sessionId
+	 * @param userId
+	 * @return all messages of the session and user id which is not received to the counter part session partner
+	 */
+	public List<Message> getReceivedMessages(Long sessionId, Long userId);
+
 }

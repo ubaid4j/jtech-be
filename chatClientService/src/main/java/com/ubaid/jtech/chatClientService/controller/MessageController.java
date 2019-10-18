@@ -41,6 +41,13 @@ public class MessageController
 		return new ResponseEntity<Message>(messageProxy.saveMessage(message), HttpStatus.ACCEPTED);
 	}
 	
+	//List<Message> getRecievedMessage using session/{sessionId}/user/{ownerId}
+	@GetMapping("session/{sessionId}/user/{userId}")
+	public ResponseEntity<List<Message>> getReceivedMessages(@PathVariable("sessionId") Long sessionId, @PathVariable("userId") Long userId)
+	{	
+		return new ResponseEntity<List<Message>>(messageProxy.getAllReceivedMessage(sessionId, userId), HttpStatus.OK);
+	}
+	
 	private Timestamp getCurrentTimestamp()
 	{
 		Date date= new Date();		 
