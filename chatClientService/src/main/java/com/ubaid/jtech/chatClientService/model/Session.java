@@ -3,18 +3,22 @@ package com.ubaid.jtech.chatClientService.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class Session
 {
 	private Long id;	
 	private Long senderId;
-	private Long recieverId;
+	@JsonProperty("receiverId")
+	private Long receiverId;
 	private Boolean isActive;
 	private Timestamp lastTimeActive;
 	private Timestamp initiateTime;
 	private Integer port;
 	private User sender;
-	private User reciever;
+	@JsonProperty("receiver")
+	private User receiver;
 	public Long getId() {
 		return id;
 	}
@@ -28,10 +32,10 @@ public class Session
 		this.senderId = senderId;
 	}
 	public Long getRecieverId() {
-		return recieverId;
+		return receiverId;
 	}
 	public void setRecieverId(Long recieverId) {
-		this.recieverId = recieverId;
+		this.receiverId = recieverId;
 	}
 	public Boolean getIsActive() {
 		return isActive;
@@ -64,31 +68,31 @@ public class Session
 		this.sender = senders.parallelStream().filter(p -> p.getId() == getSenderId()).findAny().orElse(null);
 	}
 	public User getReciever() {
-		return reciever;
+		return receiver;
 	}
 	public void setReciever(List<User> recievers) {
-		this.reciever = recievers.parallelStream().filter(p -> p.getId() == getRecieverId()).findAny().orElse(null);
+		this.receiver = recievers.parallelStream().filter(p -> p.getId() == getRecieverId()).findAny().orElse(null);
 	}
 	public Session(Long senderId, Long recieverId, Boolean isActive, Timestamp lastTimeActive, Timestamp initiateTime,
 			Integer port, User sender, User reciever) {
 		super();
 		this.senderId = senderId;
-		this.recieverId = recieverId;
+		this.receiverId = recieverId;
 		this.isActive = isActive;
 		this.lastTimeActive = lastTimeActive;
 		this.initiateTime = initiateTime;
 		this.port = port;
 		this.sender = sender;
-		this.reciever = reciever;
+		this.receiver = reciever;
 	}
 	public Session() {
 		super();
 	}
 	@Override
 	public String toString() {
-		return "Session [id=" + id + ", senderId=" + senderId + ", recieverId=" + recieverId + ", isActive=" + isActive
+		return "Session [id=" + id + ", senderId=" + senderId + ", receiverId=" + receiverId + ", isActive=" + isActive
 				+ ", lastTimeActive=" + lastTimeActive + ", initiateTime=" + initiateTime + ", port=" + port
-				+ ", sender=" + sender + ", reciever=" + reciever + "]";
+				+ ", sender=" + sender + ", receiver=" + receiver + "]";
 	}
 	
 }

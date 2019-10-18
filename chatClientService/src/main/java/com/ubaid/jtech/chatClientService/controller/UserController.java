@@ -1,5 +1,7 @@
 package com.ubaid.jtech.chatClientService.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +30,11 @@ public class UserController
 		if (email == null)
 			throw new JTechException("Enter a email");
 		return new ResponseEntity<User>(userProxy.getUserByEmail(email), HttpStatus.OK);
+	}
+	
+	@GetMapping("/")
+	public ResponseEntity<List<User>> getAllUsers()
+	{
+		return new ResponseEntity<List<User>>(userProxy.getUsers(), HttpStatus.OK);
 	}
 }

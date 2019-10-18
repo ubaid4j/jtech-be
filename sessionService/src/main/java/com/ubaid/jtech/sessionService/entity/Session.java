@@ -23,7 +23,7 @@ public class Session
 	private Long senderId;
 	
 	@Column
-	private Long recieverId;
+	private Long receiverId;
 	
 	@Column
 	private Boolean isActive;
@@ -54,11 +54,11 @@ public class Session
 	}
 
 	public Long getRecieverId() {
-		return recieverId;
+		return receiverId;
 	}
 
 	public void setRecieverId(Long recieverId) {
-		this.recieverId = recieverId;
+		this.receiverId = recieverId;
 	}
 
 	public Boolean getIsActive() {
@@ -88,7 +88,7 @@ public class Session
 	public Session(Long senderId, Long recieverId, Boolean isActive, Timestamp lastTimeActive, Timestamp initiateTime) {
 		super();
 		this.senderId = senderId;
-		this.recieverId = recieverId;
+		this.receiverId = recieverId;
 		this.isActive = isActive;
 		this.lastTimeActive = lastTimeActive;
 		this.initiateTime = initiateTime;
@@ -105,10 +105,9 @@ public class Session
 	public void setPort(Integer port) {
 		this.port = port;
 	}
-
 	@Override
 	public String toString() {
-		return "Session [id=" + id + ", senderId=" + senderId + ", recieverId=" + recieverId + ", isActive=" + isActive
+		return "Session [id=" + id + ", senderId=" + senderId + ", recieverId=" + receiverId + ", isActive=" + isActive
 				+ ", lastTimeActive=" + lastTimeActive + ", initiateTime=" + initiateTime + ", port=" + port + "]";
 	}
 }
