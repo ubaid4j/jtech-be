@@ -48,8 +48,8 @@ public class MessageController
 	public ResponseEntity<List<Message>> getAllRecievedMessage(@PathVariable("sessionId") Long sessionId,
 			@PathVariable("userId") Long userId)
 	{	
-		System.err.println(sessionId);
-		System.err.println(userId);
+//		System.err.println(sessionId);
+//		System.err.println(userId);
 		return new ResponseEntity<List<Message>>(service.getReceivedMessages(sessionId, userId), HttpStatus.OK);
 	}
 	

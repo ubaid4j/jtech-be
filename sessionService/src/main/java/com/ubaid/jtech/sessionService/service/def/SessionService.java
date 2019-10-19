@@ -13,5 +13,7 @@ public interface SessionService
 	 * 			owner of this session if it is sender of this session
 	 */
 	public List<Session> getSessionsByUserId(Long id);
+	public Session getSessionById(Long sessionId);
+	public Session updateSession(Session session);
 	
 }

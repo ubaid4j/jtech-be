@@ -15,4 +15,11 @@ public interface SessionProxy
 {
 	@GetMapping("session-service/jtech/sessions/{senderId}")
 	public List<Session> getSessionsBySenderId(@PathVariable("senderId") Long senderId);
+
+	@GetMapping("session-service/jtech/sessions/{sessionId}/user/{userId}/active/{active}")
+	public Session setUserActive(@PathVariable("sessionId") Long sessionId,
+			@PathVariable("userId") Long userId, @PathVariable("active") Boolean active);
+	
+	@GetMapping("session-service/jtech/sessions/by/session/{sessionId}")
+	public Session getSessionById(@PathVariable("sessionId") Long sessionId);
 }

@@ -12,6 +12,7 @@ import com.ubaid.jtech.sessionService.entity.Session;
 import com.ubaid.jtech.sessionService.service.def.SessionService;
 
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/jtech/sessions")
@@ -33,6 +34,27 @@ public class SessionController {
 		List<Session> sessions = sessionService.getSessionsByUserId(userId);
 		sessions.stream().forEach(s -> s.setPort(port));
 		return sessions;
+	}
+	
+	@GetMapping("/{sessionId}/user/{userId}/active/{active}")
+	public ResponseEntity<Session> setUserActive(@PathVariable("sessionId") Long sessionId,
+			@PathVariable("userId") Long userId, @PathVariable("active") Boolean active)
+	{
+		Session session = sessionService.getSessionById(sessionId);
+		if (session.getReceiverId() == userId) {
+			session.setIsReceiverActive(active);
+		} else if (session.getSenderId() == userId) {
+			session.setIsSenderActive(active);
+		}
+		session = sessionService.updateSession(session);
+		return ResponseEntity.ok(session);
+	}
+	
+	@GetMapping("by/session/{sessionId}")
+	public ResponseEntity<Session> getSessionById(@PathVariable("sessionId") Long sessionId)
+	{
+		Session session = sessionService.getSessionById(sessionId);
+		return ResponseEntity.ok(session);
 	}
 
 }

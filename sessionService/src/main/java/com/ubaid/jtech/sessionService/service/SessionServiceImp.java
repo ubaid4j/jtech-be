@@ -22,4 +22,14 @@ public class SessionServiceImp implements SessionService
 		return sessionRepo.findAllByUserId(id);
 	}
 
+	@Override
+	public Session getSessionById(Long sessionId) {
+		return sessionRepo.findById(sessionId).get();
+	}
+
+	@Override
+	public Session updateSession(Session session) {
+		return sessionRepo.save(session);
+	}
+
 }

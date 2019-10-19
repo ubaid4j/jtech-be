@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ubaid.jtech.chatClientService.feignProxy.MessageProxy;
+import com.ubaid.jtech.chatClientService.feignProxy.NotificationProxy;
+import com.ubaid.jtech.chatClientService.feignProxy.SessionProxy;
 import com.ubaid.jtech.chatClientService.model.Message;
+import com.ubaid.jtech.chatClientService.model.Notification;
+import com.ubaid.jtech.chatClientService.model.Session;
 
 
 @RestController
@@ -28,6 +32,16 @@ public class MessageController
 	@Autowired
 	private MessageProxy messageProxy;
 	
+	@Autowired
+	private SessionProxy sessionProxy;
+	
+	@Autowired
+	private NotificationProxy notificationProxy;
+	
+	/**
+	 * @param sessionId
+	 * @return
+	 */
 	@GetMapping("session/{sessionId}")
 	public ResponseEntity<List<Message>> getConversationBySessionId(@PathVariable("sessionId") Long sessionId)
 	{
@@ -42,13 +56,40 @@ public class MessageController
 	{
 		message.setSessionId(sessionId);
 		message.setSentTime(getCurrentTimestamp());
-		return new ResponseEntity<Message>(messageProxy.saveMessage(message), HttpStatus.ACCEPTED);
+		message = messageProxy.saveMessage(message);
+		//here we will store notification
+		Session session = sessionProxy.getSessionById(sessionId);
+		if(!session.getIsSenderActive() || !session.getIsReceiverActive())
+		{
+			Notification notification = new Notification();
+			notification.setIsSeen(false);
+			notification.setMessageId(message.getId());
+			notification.setSessionId(sessionId);
+			notification.setSenderId(message.getOwnerId());
+			Long ownerOfMessage = message.getOwnerId();
+			if (ownerOfMessage.equals(session.getSenderId()))
+			{
+				notification.setReceiverId(session.getReceiverId());
+			}
+			else if (ownerOfMessage.equals(session.getReceiverId()))
+			{
+				notification.setReceiverId(session.getSenderId());
+			}
+			System.err.println(notification);
+			notificationProxy.saveOrUpdateNotification(notification);
+		}
+		return new ResponseEntity<Message>(message, HttpStatus.ACCEPTED);
 	}
 	
-	//List<Message> getRecievedMessage using session/{sessionId}/user/{ownerId}
+	/**
+	 * 
+	 * @param sessionId
+	 * @param userId
+	 * @return all messages having received id null
+	 */
 	@GetMapping("session/{sessionId}/user/{userId}")
 	public ResponseEntity<List<Message>> getReceivedMessages(@PathVariable("sessionId") Long sessionId, @PathVariable("userId") Long userId)
-	{	
+	{
 		return new ResponseEntity<List<Message>>(messageProxy.getAllReceivedMessage(sessionId, userId), HttpStatus.OK);
 	}
 	

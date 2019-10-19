@@ -38,4 +38,12 @@ public class SessionController
 		});
 		return new ResponseEntity<List<Session>>(sessions, HttpStatus.OK);
 	}
+	
+	@GetMapping("/{sessionId}/user/{userId}/active/{active}")
+	public ResponseEntity<Session> setUserActive(@PathVariable("sessionId") Long sessionId,
+			@PathVariable("userId") Long userId, @PathVariable("active") Boolean active)
+	{
+		return ResponseEntity.ok(sessionProxy.setUserActive(sessionId, userId, active));
+	}
+	
 }
