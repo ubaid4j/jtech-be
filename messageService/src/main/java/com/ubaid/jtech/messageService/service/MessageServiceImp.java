@@ -1,5 +1,7 @@
 package com.ubaid.jtech.messageService.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,19 @@ public class MessageServiceImp implements MessageService
 	public List<Message> getReceivedMessages(Long sessionId, Long userId) {
 		return repo.findRecievedMessage(sessionId, userId);
 	}
+
+	@Override
+	public List<Message> updateMessages(List<Message> messages) {
+		messages.forEach(m -> m.setRecievedTime(getCurrentTimestamp()));
+		return repo.saveAll(messages);
+	}
+	
+	private Timestamp getCurrentTimestamp()
+	{
+		Date date= new Date();		 
+		Timestamp ts = new Timestamp(date.getTime());
+		return ts;
+	}
+
 
 }

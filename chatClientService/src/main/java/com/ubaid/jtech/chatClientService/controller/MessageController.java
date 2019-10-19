@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ubaid.jtech.chatClientService.feignProxy.MessageProxy;
 import com.ubaid.jtech.chatClientService.model.Message;
+
 
 @RestController
 @RequestMapping("jtech/messages")
@@ -29,7 +31,9 @@ public class MessageController
 	@GetMapping("session/{sessionId}")
 	public ResponseEntity<List<Message>> getConversationBySessionId(@PathVariable("sessionId") Long sessionId)
 	{
-		return new ResponseEntity<List<Message>>(messageProxy.getConversationBySessionId(sessionId), HttpStatus.OK);
+		List<Message> conversation = messageProxy.getConversationBySessionId(sessionId);
+		conversation.forEach(m -> System.err.println(m));
+		return new ResponseEntity<List<Message>>(conversation, HttpStatus.OK);
 	}
 
 	@PostMapping("session/{sessionId}")
@@ -53,5 +57,13 @@ public class MessageController
 		Date date= new Date();		 
 		Timestamp ts = new Timestamp(date.getTime());
 		return ts;
+	}
+	
+	@PutMapping("session")
+	public ResponseEntity<List<Message>> updateMessages(@RequestBody List<Message> messages)
+	{
+		List<Message> updatedMessages = messageProxy.updateReceivedMessages(messages);
+		updatedMessages.forEach(m -> System.err.println(m));
+		return ResponseEntity.ok(updatedMessages);
 	}
 }

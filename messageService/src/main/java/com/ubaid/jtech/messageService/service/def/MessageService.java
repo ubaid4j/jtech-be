@@ -7,6 +7,7 @@ import java.util.List;
 public interface MessageService {
 	public List<Message> getAllBySessionId(Long sessionId);
 	public Message saveMessage(Message message);
+	public List<Message> updateMessages(List<Message> messages);
 	/**
 	 * 
 	 * @param sessionId

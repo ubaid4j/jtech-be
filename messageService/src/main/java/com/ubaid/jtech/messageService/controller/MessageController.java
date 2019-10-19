@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,5 +51,11 @@ public class MessageController
 		System.err.println(sessionId);
 		System.err.println(userId);
 		return new ResponseEntity<List<Message>>(service.getReceivedMessages(sessionId, userId), HttpStatus.OK);
+	}
+	
+	@PutMapping("/by/session")
+	public ResponseEntity<List<Message>> updateMessages(@RequestBody List<Message> messages)
+	{
+		return ResponseEntity.ok(service.updateMessages(messages));
 	}
 }

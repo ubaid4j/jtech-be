@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table
 public class Message {
@@ -29,6 +31,7 @@ public class Message {
 	private Timestamp sentTime;
 
 	@Column
+	@JsonProperty("receievedTime")
 	private Timestamp receievedTime;
 	
 	@Column
@@ -119,5 +122,11 @@ public class Message {
 	public Message() {
 		super();
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Message [id=" + id + ", sessionId=" + sessionId + ", text=" + text + ", sentTime=" + sentTime
+				+ ", receievedTime=" + receievedTime + ", seenTime=" + seenTime + ", ownerId=" + ownerId + ", port="
+				+ port + "]";
+	}
 }

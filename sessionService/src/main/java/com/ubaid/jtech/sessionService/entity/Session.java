@@ -26,7 +26,10 @@ public class Session
 	private Long receiverId;
 	
 	@Column
-	private Boolean isActive;
+	private Boolean isReceiverActive;
+	
+	@Column 
+	private Boolean isSenderActive;
 	
 	@Column
 	private Timestamp lastTimeActive;
@@ -53,20 +56,28 @@ public class Session
 		this.senderId = senderId;
 	}
 
-	public Long getRecieverId() {
+	public Long getReceiverId() {
 		return receiverId;
 	}
 
-	public void setRecieverId(Long recieverId) {
-		this.receiverId = recieverId;
+	public void setReceiverId(Long receiverId) {
+		this.receiverId = receiverId;
 	}
 
-	public Boolean getIsActive() {
-		return isActive;
+	public Boolean getIsReceiverActive() {
+		return isReceiverActive;
 	}
 
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setIsReceiverActive(Boolean isReceiverActive) {
+		this.isReceiverActive = isReceiverActive;
+	}
+
+	public Boolean getIsSenderActive() {
+		return isSenderActive;
+	}
+
+	public void setIsSenderActive(Boolean isSenderActive) {
+		this.isSenderActive = isSenderActive;
 	}
 
 	public Timestamp getLastTimeActive() {
@@ -85,19 +96,6 @@ public class Session
 		this.initiateTime = initiateTime;
 	}
 
-	public Session(Long senderId, Long recieverId, Boolean isActive, Timestamp lastTimeActive, Timestamp initiateTime) {
-		super();
-		this.senderId = senderId;
-		this.receiverId = recieverId;
-		this.isActive = isActive;
-		this.lastTimeActive = lastTimeActive;
-		this.initiateTime = initiateTime;
-	}
-
-	public Session() {
-		super();
-	}
-
 	public Integer getPort() {
 		return port;
 	}
@@ -105,9 +103,28 @@ public class Session
 	public void setPort(Integer port) {
 		this.port = port;
 	}
+
+	public Session() {
+		super();
+	}
+
+	public Session(Long senderId, Long receiverId, Boolean isReceiverActive, Boolean isSenderActive,
+			Timestamp lastTimeActive, Timestamp initiateTime, Integer port) {
+		super();
+		this.senderId = senderId;
+		this.receiverId = receiverId;
+		this.isReceiverActive = isReceiverActive;
+		this.isSenderActive = isSenderActive;
+		this.lastTimeActive = lastTimeActive;
+		this.initiateTime = initiateTime;
+		this.port = port;
+	}
+
 	@Override
 	public String toString() {
-		return "Session [id=" + id + ", senderId=" + senderId + ", recieverId=" + receiverId + ", isActive=" + isActive
-				+ ", lastTimeActive=" + lastTimeActive + ", initiateTime=" + initiateTime + ", port=" + port + "]";
+		return "Session [id=" + id + ", senderId=" + senderId + ", receiverId=" + receiverId + ", isReceiverActive="
+				+ isReceiverActive + ", isSenderActive=" + isSenderActive + ", lastTimeActive=" + lastTimeActive
+				+ ", initiateTime=" + initiateTime + ", port=" + port + "]";
 	}
+
 }
