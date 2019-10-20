@@ -5,11 +5,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ubaid.jtech.userService.entity.AuthUser;
 import com.ubaid.jtech.userService.entity.User;
 import com.ubaid.jtech.userService.service.def.UserService;
 
@@ -49,6 +53,18 @@ public class UserController
 		return user;
 	}
 
+	@PostMapping("/auth")
+	public ResponseEntity<User> getUser(@RequestBody AuthUser user)
+	{
+		System.err.println(user);
+		return ResponseEntity.ok(userService.findUserByEmailAndPasswor(user.getEmail(), user.getPassword()));
+	}
+	
+	@PostMapping("")
+	public ResponseEntity<User> createUser(@RequestBody AuthUser user) {
+		return ResponseEntity.ok(userService.createUser(user));		
+	}
+	
 	/**
 	 * 
 	 * @return User on user id
