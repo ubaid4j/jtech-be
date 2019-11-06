@@ -5,26 +5,36 @@ services:
   image: rabbitmq
   ports:
    - 5672:5672
+  networks:
+   - default
  zipking:
   image: openzipkin/zipkin
   ports:
    - 9411:9411
   depends_on:
    - rabbitmq
+  networks:
+   - default
  eureka-naming-server:
   build: ./eurekaNamingServer
   volumes:
    - ./eurekaNamingServer:/volume
   ports:
    - 8761:8761
+  networks:
+   - default
  api-gateway-server:
   build: ./apiGatewayServer
   volumes:
    - ./apiGatewayServer:/volume
   ports:
    - 8755:8755
+  networks:
+   - default
   depends_on:
    - eureka-naming-server
    - zipking
+  environment:
+   - RABBIT_URI=amqp://localhost
  
 
