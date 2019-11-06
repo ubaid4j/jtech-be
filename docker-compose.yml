@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+ rabbitmq:
+  image: rabbitmq
+  ports:
+   - 5672:5672
+ zipking:
+  image: openzipkin/zipkin
+  ports:
+   - 9411:9411
+  depends_on:
+   - rabbitmq
+ eureka-naming-server:
+  build: ./eurekaNamingServer
+  volumes:
+   - ./eurekaNamingServer:/volume
+  ports:
+   - 8761:8761
+ api-gateway-server:
+  build: ./apiGatewayServer
+  volumes:
+   - ./apiGatewayServer:/volume
+  ports:
+   - 8755:8755
+  depends_on:
+   - eureka-naming-server
+   - zipking
+ 
+
