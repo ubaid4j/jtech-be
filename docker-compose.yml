@@ -6,7 +6,7 @@ services:
   ports:
    - 5672:5672
   networks:
-   - default
+   - jtechbe-network
  zipking:
   image: openzipkin/zipkin
   ports:
@@ -14,7 +14,7 @@ services:
   depends_on:
    - rabbitmq
   networks:
-   - default
+   - jtechbe-network
  eureka-naming-server:
   build: ./eurekaNamingServer
   volumes:
@@ -22,7 +22,7 @@ services:
   ports:
    - 8761:8761
   networks:
-   - default
+   - jtechbe-network
  api-gateway-server:
   build: ./apiGatewayServer
   volumes:
@@ -30,11 +30,16 @@ services:
   ports:
    - 8755:8755
   networks:
-   - default
+   - jtechbe-network
   depends_on:
    - eureka-naming-server
    - zipking
+  links:
+   - eureka-naming-server
   environment:
-   - RABBIT_URI=amqp://localhost
+   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-naming-server:8761/eureka
+  
  
-
+networks:
+ jtechbe-network:
+  driver: overlay
