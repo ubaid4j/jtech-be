@@ -2,44 +2,97 @@ version: '3'
 
 services:
  rabbitmq:
-  image: rabbitmq
-  ports:
-   - 5672:5672
-  networks:
-   - jtechbe-network
+    image: rabbitmq:management
+    expose:
+      - 5672
+    ports:
+      - 5672:5672
+      - 15672:15672
+    network_mode: "host"
  zipking:
   image: openzipkin/zipkin
   ports:
    - 9411:9411
+#  networks:
+#   - jtechbe-network
   depends_on:
    - rabbitmq
-  networks:
-   - jtechbe-network
+#  links:
+#   - rabbitmq
+#  environment:
+#   - RABBIT_HOST=rabbitmq
+  network_mode: "host"
  eureka-naming-server:
   build: ./eurekaNamingServer
   volumes:
    - ./eurekaNamingServer:/volume
   ports:
    - 8761:8761
-  networks:
-   - jtechbe-network
+#  networks:
+#   - jtechbe-network
+  network_mode: "host"
  api-gateway-server:
   build: ./apiGatewayServer
   volumes:
    - ./apiGatewayServer:/volume
+  expose:
+   - 8755
   ports:
    - 8755:8755
-  networks:
-   - jtechbe-network
+#  networks:
+#   - jtechbe-network
+  network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
-  links:
+   - rabbitmq
+ user-service:
+  build: ./userService
+  volumes:
+   - ./userService:/volume
+  expose:
+   - 8600
+  ports:
+   - 8600:8600
+  network_mode: "host"
+  depends_on:
    - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
+ db:
+  image: mysql:8.0.18
+  restart: always
   environment:
-   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-naming-server:8761/eureka
-  
- 
-networks:
- jtechbe-network:
-  driver: overlay
+   MYSQL_DATABASE: 'db'
+    # So you don't have to use root, but you can if you like
+   MYSQL_USER: 'root'
+    # You can use whatever password you like
+   MYSQL_PASSWORD: 'password'
+    # Password for root access
+   MYSQL_ROOT_PASSWORD: 'password'
+  ports:
+    # <Port exposed> : < MySQL Port running inside container>
+   - '3306:3306'
+  expose:
+  # Opens port 3306 on the container
+   - '3306'
+  # Where our data will be persisted
+  volumes:
+   - jtechdb:/var/lib/mysql
+  network_mode: "host"
+# Names our volume
+volumes:
+  jtechdb:
+#  links:
+#   - eureka-naming-server
+#   - zipking
+#   - rabbitmq
+#  environment:
+#   eureka_client_serviceUrl_defaultZone: "http://eureka-naming-server:8761/eureka"
+#   RABBIT_URI: "amqp://guest:guest@rabbitmq:5672"
+#   RABBIT_HOST: rabbitmq
+
+#networks:
+# jtechbe-network:
+#  driver: overlay
