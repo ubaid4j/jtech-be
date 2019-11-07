@@ -110,20 +110,21 @@ services:
    - zipking
    - rabbitmq
 
-  db:
-    image: mysql:8.0.18
-    restart: always
-    environment:
-    MYSQL_DATABASE: 'db'
-    MYSQL_USER: 'root'
-    MYSQL_PASSWORD: 'password'
-    MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-    - '3306:3306'
-    expose:
-    - '3306'
-    volumes:
-    - jtechdb:/var/lib/mysql
-    network_mode: "host"
+ db:
+  image: mysql:8.0.18
+  restart: always
+  environment:
+   MYSQL_DATABASE: 'db'
+   MYSQL_USER: 'root'
+   MYSQL_PASSWORD: 'password'
+   MYSQL_ROOT_PASSWORD: 'password'
+  ports:
+   - '3306:3306'
+  expose:
+   - '3306'
+  volumes:
+   - jtechdb:/var/lib/mysql
+  network_mode: "host"
+
 volumes:
   jtechdb:
