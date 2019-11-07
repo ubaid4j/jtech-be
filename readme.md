@@ -1,6 +1,7 @@
-<h3>Ports</h3>
+<h1>Requirements</h1>
+<ol><li>Docker Community Edition</li></ol>
+<h1>How to run</h1>
 <ol>
-    <li>Client Service: 8200</li>
-    <li>API Gateway: 8755</li>
-    <li>Naming Server: 8761</li>
+    <li>clone the repository</li>
+    <li>./run.sh</li>
 </ol>
