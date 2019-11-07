@@ -40,20 +40,6 @@ services:
    - eureka-naming-server
    - zipking
    - rabbitmq
- user-service:
-  build: ./userService
-  volumes:
-   - ./userService:/volume
-  expose:
-   - 8600
-  ports:
-   - 8600:8600
-  network_mode: "host"
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
  session-service:
   build: ./sessionService
   volumes:
@@ -96,6 +82,20 @@ services:
    - zipking
    - rabbitmq
    - db
+ user-service:
+  build: ./userService
+  volumes:
+   - ./userService:/volume
+  expose:
+   - 8600
+  ports:
+   - 8600:8600
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
  chatclient-service:
   build: ./chatClientService
   volumes:
@@ -109,7 +109,8 @@ services:
    - eureka-naming-server
    - zipking
    - rabbitmq
- db:
+
+db:
   image: mysql:8.0.18
   restart: always
   environment:
