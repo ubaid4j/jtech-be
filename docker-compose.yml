@@ -13,6 +13,8 @@ services:
   image: openzipkin/zipkin
   ports:
    - 9411:9411
+  expose:
+   - 9411
   depends_on:
    - rabbitmq
   network_mode: "host"
@@ -22,6 +24,8 @@ services:
    - ./eurekaNamingServer:/volume
   ports:
    - 8761:8761
+  expose:
+   - 8761
   network_mode: "host"
  api-gateway-server:
   build: ./apiGatewayServer
@@ -53,7 +57,7 @@ services:
  session-service:
   build: ./sessionService
   volumes:
-   - ./sessionServiceService:/volume
+   - ./sessionService:/volume
   expose:
    - 8300
   ports:
@@ -64,7 +68,47 @@ services:
    - zipking
    - rabbitmq
    - db
-
+ message-service:
+  build: ./messageService
+  volumes:
+   - ./messageService:/volume
+  expose:
+   - 8400
+  ports:
+   - 8400:8400
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
+ notification-service:
+  build: ./notificationService
+  volumes:
+   - ./notificationService:/volume
+  expose:
+   - 8500
+  ports:
+   - 8500:8500
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
+ chatclient-service:
+  build: ./chatClientService
+  volumes:
+   - ./chatClientService:/volume
+  expose:
+   - 8200
+  ports:
+   - 8200:8200
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
  db:
   image: mysql:8.0.18
   restart: always
