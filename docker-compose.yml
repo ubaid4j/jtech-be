@@ -50,6 +50,21 @@ services:
    - zipking
    - rabbitmq
    - db
+ session-service:
+  build: ./sessionService
+  volumes:
+   - ./sessionServiceService:/volume
+  expose:
+   - 8300
+  ports:
+   - 8300:8300
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
+
  db:
   image: mysql:8.0.18
   restart: always
