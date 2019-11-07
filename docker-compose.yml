@@ -50,6 +50,61 @@ services:
    - zipking
    - rabbitmq
    - db
+ session-service:
+  build: ./sessionService
+  volumes:
+   - ./sessionService:/volume
+  expose:
+   - 8300
+  ports:
+   - 8300:8300
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
+ message-service:
+  build: ./messageService
+  volumes:
+   - ./messageService:/volume
+  expose:
+   - 8400
+  ports:
+   - 8400:8400
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
+ notification-service:
+  build: ./notificationService
+  volumes:
+   - ./notificationService:/volume
+  expose:
+   - 8500
+  ports:
+   - 8500:8500
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
+   - db
+ chatclient-service:
+  build: ./chatClientService
+  volumes:
+   - ./chatClientService:/volume
+  expose:
+   - 8200
+  ports:
+   - 8200:8200
+  network_mode: "host"
+  depends_on:
+   - eureka-naming-server
+   - zipking
+   - rabbitmq
  db:
   image: mysql:8.0.18
   restart: always
