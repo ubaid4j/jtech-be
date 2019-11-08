@@ -35,6 +35,7 @@ public class UserController
 	@GetMapping("/")
 	public ResponseEntity<List<User>> getAllUsers()
 	{
+		System.out.println("Line 38 UserController at Chat Client Service");
 		return new ResponseEntity<List<User>>(userProxy.getUsers(), HttpStatus.OK);
 	}
 }
