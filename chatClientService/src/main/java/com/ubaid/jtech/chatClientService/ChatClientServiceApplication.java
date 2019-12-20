@@ -22,5 +22,5 @@ public class ChatClientServiceApplication {
 	{
 		return Sampler.ALWAYS_SAMPLE;
 	}
-
+	
 }

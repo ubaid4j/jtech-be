@@ -1,5 +1,7 @@
 package com.ubaid.jtech.sessionService.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,14 @@ public class SessionServiceImp implements SessionService
 
 	@Override
 	public Session updateSession(Session session) {
+		return sessionRepo.save(session);
+	}
+
+	@Override
+	public Session createSession(Session session) {
+		session.setIsReceiverActive(false);
+		session.setIsSenderActive(false);
+		session.setInitiateTime(new Timestamp((new Date()).getTime()));
 		return sessionRepo.save(session);
 	}
 

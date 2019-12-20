@@ -6,6 +6,8 @@ import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ubaid.jtech.chatClientService.model.Session;
 
@@ -22,4 +24,7 @@ public interface SessionProxy
 	
 	@GetMapping("session-service/jtech/sessions/by/session/{sessionId}")
 	public Session getSessionById(@PathVariable("sessionId") Long sessionId);
+	
+	@PostMapping("session-service/jtech/sessions")
+	public Session createSession(@RequestBody Session session);
 }
