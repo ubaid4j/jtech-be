@@ -8,7 +8,7 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    network_mode: "host"
+    # network_mode: "host"
  zipking:
   image: openzipkin/zipkin
   ports:
@@ -17,7 +17,7 @@ services:
    - 9411
   depends_on:
    - rabbitmq
-  network_mode: "host"
+  # network_mode: "host"
  eureka-naming-server:
   build: ./eurekaNamingServer
   volumes:
@@ -26,7 +26,7 @@ services:
    - 8761:8761
   expose:
    - 8761
-  network_mode: "host"
+  # network_mode: "host"
  api-gateway-server:
   build: ./apiGatewayServer
   volumes:
@@ -35,7 +35,7 @@ services:
    - 8755
   ports:
    - 8755:8755
-  network_mode: "host"
+  # network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
@@ -48,7 +48,7 @@ services:
    - 8300
   ports:
    - 8300:8300
-  network_mode: "host"
+  # network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
@@ -62,7 +62,7 @@ services:
    - 8400
   ports:
    - 8400:8400
-  network_mode: "host"
+  # network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
@@ -76,7 +76,7 @@ services:
    - 8500
   ports:
    - 8500:8500
-  network_mode: "host"
+  # network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
@@ -90,7 +90,7 @@ services:
    - 8600
   ports:
    - 8600:8600
-  network_mode: "host"
+  # network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
@@ -104,7 +104,7 @@ services:
    - 8200
   ports:
    - 8200:8200
-  network_mode: "host"
+  # network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
@@ -124,7 +124,7 @@ services:
    - '3306'
   volumes:
    - jtechdb:/var/lib/mysql
-  network_mode: "host"
+  # network_mode: "host"
 
 volumes:
   jtechdb:
