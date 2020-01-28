@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
  rabbitmq:
@@ -9,131 +9,151 @@ services:
       - 5672:5672
       - 15672:15672
     # network_mode: "host"
-    network_mode: "host"
+    # network_mode: "net1"
+    # networks:
+    #   - new
  zipking:
   image: openzipkin/zipkin
   ports:
-   - 9411:9411
+   - "9411:9411"
   expose:
-   - 9411
+   - "9411"
   depends_on:
    - rabbitmq
   # network_mode: "host"
-  network_mode: "host"
+  # network_mode: "net1"
+  # networks:
+  #   - new
  eureka-naming-server:
   build: ./eurekaNamingServer
   volumes:
    - ./eurekaNamingServer:/volume
   ports:
-   - 8761:8761
+   - "8761:8761"
   expose:
-   - 8761
+   - "8761"
   # network_mode: "host"
-  network_mode: "host"
+  # network_mode: "net1"
+  # networks:
+  #   - new
  api-gateway-server:
   build: ./apiGatewayServer
   volumes:
    - ./apiGatewayServer:/volume
   expose:
-   - 8755
+   - "8755"
   ports:
-   - 8755:8755
+   - "8755:8755"
   # network_mode: "host"
-  network_mode: "host"
+  # network_mode: "net1"
+  # networks:
+  #   - new
   depends_on:
    - eureka-naming-server
    - zipking
    - rabbitmq
- session-service:
-  build: ./sessionService
-  volumes:
-   - ./sessionService:/volume
-  expose:
-   - 8300
-  ports:
-   - 8300:8300
-  # network_mode: "host"
-  network_mode: "host"
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
- message-service:
-  build: ./messageService
-  volumes:
-   - ./messageService:/volume
-  expose:
-   - 8400
-  ports:
-   - 8400:8400
-  # network_mode: "host"
-  network_mode: "host"
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
- notification-service:
-  build: ./notificationService
-  volumes:
-   - ./notificationService:/volume
-  expose:
-   - 8500
-  ports:
-   - 8500:8500
-  # network_mode: "host"
-  network_mode: "host"
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
- user-service:
-  build: ./userService
-  volumes:
-   - ./userService:/volume
-  expose:
-   - 8600
-  ports:
-   - 8600:8600
-  # network_mode: "host"
-  network_mode: "host"
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
- chatclient-service:
-  build: ./chatClientService
-  volumes:
-   - ./chatClientService:/volume
-  expose:
-   - 8200
-  ports:
-   - 8200:8200
-  # network_mode: "host"
-  network_mode: "host"
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-
- db:
-  image: mysql:8.0.18
-  restart: always
-  environment:
-   MYSQL_DATABASE: 'db'
-   MYSQL_USER: 'root'
-   MYSQL_PASSWORD: 'password'
-   MYSQL_ROOT_PASSWORD: 'password'
-  ports:
-   - '3306:3306'
-  expose:
-   - '3306'
-  volumes:
-   - jtechdb:/var/lib/mysql
-  # network_mode: "host"
-  network_mode: "host"
+#  session-service:
+#   build: ./sessionService
+#   volumes:
+#    - ./sessionService:/volume
+#   expose:
+#    - 8300
+#   ports:
+#    - 8300:8300
+#   # network_mode: "host"
+#   network_mode: "net1"
+#   depends_on:
+#    - eureka-naming-server
+#    - zipking
+#    - rabbitmq
+#    - db
+#   environment:
+#     SPRING_RABBITMQ_HOST: rabbitmq
+#  message-service:
+#   build: ./messageService
+#   volumes:
+#    - ./messageService:/volume
+#   expose:
+#    - 8400
+#   ports:
+#    - 8400:8400
+#   # network_mode: "host"
+#   network_mode: "net1"
+#   depends_on:
+#    - eureka-naming-server
+#    - zipking
+#    - rabbitmq
+#    - db
+#   environment:
+#     SPRING_RABBITMQ_HOST: rabbitmq   
+#  notification-service:
+#   build: ./notificationService
+#   volumes:
+#    - ./notificationService:/volume
+#   expose:
+#    - 8500
+#   ports:
+#    - 8500:8500
+#   # network_mode: "host"
+#   network_mode: "net1"
+#   depends_on:
+#    - eureka-naming-server
+#    - zipking
+#    - rabbitmq
+#    - db
+#   environment:
+#     SPRING_RABBITMQ_HOST: rabbitmq
+#  user-service:
+#   build: ./userService
+#   volumes:
+#    - ./userService:/volume
+#   expose:
+#    - 8600
+#   ports:
+#    - 8600:8600
+#   # network_mode: "host"
+#   network_mode: "net1"
+#   depends_on:
+#    - eureka-naming-server
+#    - zipking
+#    - rabbitmq
+#    - db
+#   environment:
+#     SPRING_RABBITMQ_HOST: rabbitmq
+#  chatclient-service:
+#   build: ./chatClientService
+#   volumes:
+#    - ./chatClientService:/volume
+#   expose:
+#    - 8200
+#   ports:
+#    - 8200:8200
+#   # network_mode: "host"
+#   network_mode: "net1"
+#   depends_on:
+#    - eureka-naming-server
+#    - zipking
+#    - rabbitmq
+#   environment:
+#     SPRING_RABBITMQ_HOST: rabbitmq
+#  db:
+#   image: mysql:8.0.18
+#   restart: always
+#   environment:
+#    MYSQL_DATABASE: 'db'
+#    MYSQL_USER: 'root'
+#    MYSQL_PASSWORD: 'password'
+#    MYSQL_ROOT_PASSWORD: 'password'
+#   ports:
+#    - '3306:3306'
+#   expose:
+#    - '3306'
+#   volumes:
+#    - jtechdb:/var/lib/mysql
+#   # network_mode: "host"
+#   network_mode: "net1"
 volumes:
   jtechdb:
+# networks:
+#   net1:
+#   new:
