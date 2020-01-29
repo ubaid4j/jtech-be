@@ -1,53 +1,49 @@
-version: '3.7'
+version: '3'
 
 services:
  rabbitmq:
     image: rabbitmq:management
+    restart: on-failure
     expose:
-      - 5672
+      - "5672"
     ports:
       - 5672:5672
       - 15672:15672
-    # network_mode: "host"
-    # network_mode: "net1"
-    # networks:
-    #   - new
+    networks: 
+      - my-shared-network
  zipking:
   image: openzipkin/zipkin
+  restart: on-failure
   ports:
    - "9411:9411"
   expose:
    - "9411"
   depends_on:
    - rabbitmq
-  # network_mode: "host"
-  # network_mode: "net1"
-  # networks:
-  #   - new
+  networks: 
+    - my-shared-network
  eureka-naming-server:
   build: ./eurekaNamingServer
+  restart: on-failure
   volumes:
    - ./eurekaNamingServer:/volume
   ports:
    - "8761:8761"
   expose:
    - "8761"
-  # network_mode: "host"
-  # network_mode: "net1"
-  # networks:
-  #   - new
+  networks: 
+    - my-shared-network
  api-gateway-server:
   build: ./apiGatewayServer
+  restart: on-failure
   volumes:
    - ./apiGatewayServer:/volume
   expose:
    - "8755"
   ports:
    - "8755:8755"
-  # network_mode: "host"
-  # network_mode: "net1"
-  # networks:
-  #   - new
+  networks: 
+    - my-shared-network
   depends_on:
    - eureka-naming-server
    - zipking
@@ -157,3 +153,5 @@ volumes:
 # networks:
 #   net1:
 #   new:
+networks:
+  my-shared-network: {}
