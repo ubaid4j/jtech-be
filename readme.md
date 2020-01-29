@@ -9,3 +9,9 @@
 ### Networking
 - Inspect a container and get IP address of the network which this container is using
 - now use this ip address instead of local host
+
+### Note
+ - Use
+    ```
+    spring.rabbitmq.addresses=amqp://rabbitmq:5672/
+    ```

@@ -56,15 +56,13 @@ services:
 #    - 8300
 #   ports:
 #    - 8300:8300
-#   # network_mode: "host"
-#   network_mode: "net1"
+#   networks:
+#    - my-shared-network
 #   depends_on:
 #    - eureka-naming-server
 #    - zipking
 #    - rabbitmq
 #    - db
-#   environment:
-#     SPRING_RABBITMQ_HOST: rabbitmq
 #  message-service:
 #   build: ./messageService
 #   volumes:
@@ -73,15 +71,13 @@ services:
 #    - 8400
 #   ports:
 #    - 8400:8400
-#   # network_mode: "host"
-#   network_mode: "net1"
+#   networks:
+#    - my-shared-network
 #   depends_on:
 #    - eureka-naming-server
 #    - zipking
 #    - rabbitmq
 #    - db
-#   environment:
-#     SPRING_RABBITMQ_HOST: rabbitmq   
 #  notification-service:
 #   build: ./notificationService
 #   volumes:
@@ -146,12 +142,9 @@ services:
 #    - '3306'
 #   volumes:
 #    - jtechdb:/var/lib/mysql
-#   # network_mode: "host"
-#   network_mode: "net1"
+#   networks:
+#    - my-shared-network
 volumes:
   jtechdb:
-# networks:
-#   net1:
-#   new:
 networks:
   my-shared-network: {}
