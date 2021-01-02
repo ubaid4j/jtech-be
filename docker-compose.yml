@@ -3,39 +3,49 @@ version: '3'
 services:
  rabbitmq:
     image: rabbitmq:management
+    restart: on-failure
     expose:
-      - 5672
+      - "5672"
     ports:
       - 5672:5672
       - 15672:15672
-    network_mode: "host"
+    networks: 
+      - my-shared-network
  zipking:
   image: openzipkin/zipkin
+  restart: on-failure
   ports:
-   - 9411:9411
+   - "9411:9411"
   expose:
-   - 9411
+   - "9411"
   depends_on:
    - rabbitmq
-  network_mode: "host"
+  environment:
+    - "RABBIT_URI=amqp://guest:guest@rabbitmq:5672"
+  networks: 
+    - my-shared-network
  eureka-naming-server:
   build: ./eurekaNamingServer
+  restart: on-failure
   volumes:
    - ./eurekaNamingServer:/volume
   ports:
-   - 8761:8761
+   - "8761:8761"
   expose:
-   - 8761
-  network_mode: "host"
+   - "8761"
+  networks: 
+    - my-shared-network
  api-gateway-server:
   build: ./apiGatewayServer
+  restart: on-failure
   volumes:
    - ./apiGatewayServer:/volume
   expose:
-   - 8755
+   - "8755"
   ports:
-   - 8755:8755
-  network_mode: "host"
+   - "8755:8755"
+  networks: 
+    - my-shared-network
   depends_on:
    - eureka-naming-server
    - zipking
@@ -48,7 +58,8 @@ services:
    - 8300
   ports:
    - 8300:8300
-  network_mode: "host"
+  networks:
+   - my-shared-network
   depends_on:
    - eureka-naming-server
    - zipking
@@ -62,7 +73,8 @@ services:
    - 8400
   ports:
    - 8400:8400
-  network_mode: "host"
+  networks:
+   - my-shared-network
   depends_on:
    - eureka-naming-server
    - zipking
@@ -76,7 +88,8 @@ services:
    - 8500
   ports:
    - 8500:8500
-  network_mode: "host"
+  networks:
+   - my-shared-network
   depends_on:
    - eureka-naming-server
    - zipking
@@ -90,12 +103,13 @@ services:
    - 8600
   ports:
    - 8600:8600
-  network_mode: "host"
   depends_on:
    - eureka-naming-server
    - zipking
    - rabbitmq
    - db
+  networks:
+   - my-shared-network
  chatclient-service:
   build: ./chatClientService
   volumes:
@@ -104,12 +118,12 @@ services:
    - 8200
   ports:
    - 8200:8200
-  network_mode: "host"
+  networks:
+   - my-shared-network
   depends_on:
    - eureka-naming-server
    - zipking
    - rabbitmq
-
  db:
   image: mysql:8.0.18
   restart: always
@@ -124,7 +138,9 @@ services:
    - '3306'
   volumes:
    - jtechdb:/var/lib/mysql
-  network_mode: "host"
-
+  networks:
+   - my-shared-network
 volumes:
   jtechdb:
+networks:
+  my-shared-network: {}
