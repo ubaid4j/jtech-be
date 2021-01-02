@@ -1,146 +1,92 @@
-version: '3'
+version: '3.5'
 
 services:
- rabbitmq:
-    image: rabbitmq:management
-    restart: on-failure
-    expose:
-      - "5672"
-    ports:
-      - 5672:5672
-      - 15672:15672
-    networks: 
-      - my-shared-network
- zipking:
-  image: openzipkin/zipkin
-  restart: on-failure
-  ports:
-   - "9411:9411"
-  expose:
-   - "9411"
-  depends_on:
-   - rabbitmq
-  environment:
-    - "RABBIT_URI=amqp://guest:guest@rabbitmq:5672"
-  networks: 
-    - my-shared-network
- eureka-naming-server:
-  build: ./eurekaNamingServer
-  restart: on-failure
-  volumes:
-   - ./eurekaNamingServer:/volume
-  ports:
-   - "8761:8761"
-  expose:
-   - "8761"
-  networks: 
-    - my-shared-network
- api-gateway-server:
-  build: ./apiGatewayServer
-  restart: on-failure
-  volumes:
-   - ./apiGatewayServer:/volume
-  expose:
-   - "8755"
-  ports:
-   - "8755:8755"
-  networks: 
-    - my-shared-network
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
- session-service:
-  build: ./sessionService
-  volumes:
-   - ./sessionService:/volume
-  expose:
-   - 8300
-  ports:
-   - 8300:8300
-  networks:
-   - my-shared-network
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
- message-service:
-  build: ./messageService
-  volumes:
-   - ./messageService:/volume
-  expose:
-   - 8400
-  ports:
-   - 8400:8400
-  networks:
-   - my-shared-network
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
- notification-service:
-  build: ./notificationService
-  volumes:
-   - ./notificationService:/volume
-  expose:
-   - 8500
-  ports:
-   - 8500:8500
-  networks:
-   - my-shared-network
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
- user-service:
-  build: ./userService
-  volumes:
-   - ./userService:/volume
-  expose:
-   - 8600
-  ports:
-   - 8600:8600
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
-   - db
-  networks:
-   - my-shared-network
- chatclient-service:
-  build: ./chatClientService
-  volumes:
-   - ./chatClientService:/volume
-  expose:
-   - 8200
-  ports:
-   - 8200:8200
-  networks:
-   - my-shared-network
-  depends_on:
-   - eureka-naming-server
-   - zipking
-   - rabbitmq
- db:
-  image: mysql:8.0.18
-  restart: always
-  environment:
-   MYSQL_DATABASE: 'db'
-   MYSQL_USER: 'root'
-   MYSQL_PASSWORD: 'password'
-   MYSQL_ROOT_PASSWORD: 'password'
-  ports:
-   - '3306:3306'
-  expose:
-   - '3306'
-  volumes:
-   - jtechdb:/var/lib/mysql
-  networks:
-   - my-shared-network
+    api-gateway-server:
+        build:
+            context: apiGatewayServer
+            dockerfile: Dockerfile
+        volumes:
+            - jconnect-services-vol:/tmp
+        expose:
+            - "8755"
+        ports:
+            - "8755:8755"
+        networks:
+            - jconnect-net
+    session-service:
+        build:
+            context: sessionService
+            dockerfile: Dockerfile
+        volumes:
+            - jconnect-services-vol:/tmp
+        expose:
+            - 8300
+        ports:
+            - 8300:8300
+        networks:
+            - jconnect-net
+        depends_on:
+            - api-gateway-server
+    message-service:
+        build:
+            context: messageService
+            dockerfile: Dockerfile
+        volumes:
+            - jconnect-services-vol:/tmp
+        expose:
+            - 8400
+        ports:
+            - 8400:8400
+        networks:
+            - jconnect-net
+        depends_on:
+            - api-gateway-server
+    notification-service:
+        build:
+            context: notificationService
+            dockerfile: Dockerfile
+        volumes:
+            - jconnect-services-vol:/tmp
+        expose:
+            - 8500
+        ports:
+            - 8500:8500
+        networks:
+            - jconnect-net
+        depends_on:
+            - api-gateway-server
+    user-service:
+        build:
+            context: userService
+            dockerfile: Dockerfile
+        volumes:
+            - jconnect-services-vol:/tmp
+        expose:
+            - 8600
+        ports:
+            - 8600:8600
+        depends_on:
+            - api-gateway-server
+        networks:
+            - jconnect-net
+    chatclient-service:
+        build:
+            context: chatClientService
+            dockerfile: Dockerfile
+        volumes:
+            - jconnect-services-vol:/tmp
+        expose:
+            - 8200
+        ports:
+            - 8200:8200
+        networks:
+            - jconnect-net
+        depends_on:
+            - api-gateway-server
 volumes:
-  jtechdb:
+    jconnect-services-vol:
+        name: jconnect-services-vol
+
 networks:
-  my-shared-network: {}
+    jconnect-net:
+        external: true

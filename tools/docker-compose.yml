@@ -1,0 +1,54 @@
+version: '3.5'
+services:
+    rabbitmq:
+        container_name: jconnect-rabbitmq
+        image: rabbitmq:management
+        expose:
+            - "5672"
+        ports:
+            - 5672:5672
+            - 15672:15672
+        networks:
+            - jconnect-net
+    zipkin:
+        container_name: jconnect-zipkin
+        image: openzipkin/zipkin
+        ports:
+            - "9411:9411"
+        expose:
+            - "9411"
+        networks:
+            - jconnect-net
+    naming-server:
+        container_name: jconnect-naming-server
+        build:
+            context: ../eurekaNamingServer
+            dockerfile: Dockerfile
+        networks:
+            - jconnect-net
+        expose:
+            - 8761
+        ports:
+            - 8761:8761
+    db:
+        container_name: jconnect-db
+        image: mysql
+        environment:
+            MYSQL_DATABASE: 'spring_dev'
+            MYSQL_USER: 'spring'
+            MYSQL_PASSWORD: 'password'
+            MYSQL_ROOT_PASSWORD: 'password'
+        ports:
+            - '3310:3306'
+        expose:
+            - '3306'
+        volumes:
+            - jconnect-db-vol:/var/lib/mysql
+        networks:
+            - jconnect-net
+volumes:
+    jconnect-db-vol:
+        name: jconnect-db-vol
+networks:
+    jconnect-net:
+        name: jconnect-net
