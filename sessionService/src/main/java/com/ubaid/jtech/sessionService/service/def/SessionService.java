@@ -15,5 +15,6 @@ public interface SessionService
 	public List<Session> getSessionsByUserId(Long id);
 	public Session getSessionById(Long sessionId);
 	public Session updateSession(Session session);
+	public Session createSession(Session session);
 	
 }

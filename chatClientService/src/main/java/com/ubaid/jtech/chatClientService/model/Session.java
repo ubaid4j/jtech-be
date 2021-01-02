@@ -21,12 +21,14 @@ public class Session
 
 	/*--------------------------------Don't Alter------------------------------------------------------------*/
 	public void setSender(List<User> senders) {
+		if (senders == null) return;
 		this.sender = senders.parallelStream().filter(p -> p.getId() == getSenderId()).findAny().orElse(null);
 	}
 	public User getReciever() {
 		return receiver;
 	}
 	public void setReciever(List<User> recievers) {
+		if (recievers == null) return;
 		this.receiver = recievers.parallelStream().filter(p -> p.getId() == getReceiverId()).findAny().orElse(null);
 	}
 	/*--------------------------------------------------------------------------------------------------------*/

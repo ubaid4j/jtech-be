@@ -2,6 +2,8 @@ package com.ubaid.jtech.chatClientService.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class User {
 
 	private Long id;
@@ -19,6 +21,12 @@ public class User {
 	private Boolean isActive;
 
 	private Timestamp lastSeen;
+
+	@JsonIgnore
+	private String email;
+	
+	@JsonIgnore
+	private String password;
 
 	public Long getId() {
 		return id;
@@ -84,15 +92,24 @@ public class User {
 		this.lastSeen = lastSeen;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", midName=" + midName + ", lastName=" + lastName
-				+ ", imageURL=" + imageURL + ", port=" + port + ", isActive=" + isActive + ", lastSeen=" + lastSeen
-				+ "]";
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public User(String firstName, String midName, String lastName, String imageURL, Integer port, Boolean isActive,
-			Timestamp lastSeen) {
+			Timestamp lastSeen, String email, String password) {
 		super();
 		this.firstName = firstName;
 		this.midName = midName;
@@ -101,12 +118,18 @@ public class User {
 		this.port = port;
 		this.isActive = isActive;
 		this.lastSeen = lastSeen;
+		this.email = email;
+		this.password = password;
 	}
 
 	public User() {
 		super();
 	}
 
-
-	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", midName=" + midName + ", lastName=" + lastName
+				+ ", imageURL=" + imageURL + ", port=" + port + ", isActive=" + isActive + ", lastSeen=" + lastSeen
+				+ ", email=" + email + ", password=" + password + "]";
+	}
 }
