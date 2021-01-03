@@ -3,7 +3,7 @@ version: '3.5'
 services:
     api-gateway-server:
         build:
-            context: apiGatewayServer
+            context: api-gateway
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -15,7 +15,7 @@ services:
             - jconnect-net
     session-service:
         build:
-            context: sessionService
+            context: session
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -29,7 +29,7 @@ services:
             - api-gateway-server
     message-service:
         build:
-            context: messageService
+            context: messages
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -43,7 +43,7 @@ services:
             - api-gateway-server
     notification-service:
         build:
-            context: notificationService
+            context: notification
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -57,7 +57,7 @@ services:
             - api-gateway-server
     user-service:
         build:
-            context: userService
+            context: users
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -69,9 +69,9 @@ services:
             - api-gateway-server
         networks:
             - jconnect-net
-    chatclient-service:
+    rest-api:
         build:
-            context: chatClientService
+            context: rest-api
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp

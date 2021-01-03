@@ -22,7 +22,7 @@ services:
     naming-server:
         container_name: jconnect-naming-server
         build:
-            context: ../eurekaNamingServer
+            context: ../naming-server
             dockerfile: Dockerfile
         networks:
             - jconnect-net

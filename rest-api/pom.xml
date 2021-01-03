@@ -7,7 +7,7 @@
 		<artifactId>jconnect-be</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>rest-apis</artifactId>
+	<artifactId>rest-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Rest API</name>
 	<description>JConnect Rest API</description>
