@@ -1,0 +1,5 @@
+truncate user;
+insert into user(date_created, email, first_name, imageurl, is_active, is_logged_in, last_name, last_seen, mid_name, password)
+values('2019-09-01 20:05:12', 'urehman.bese16seecs@seecs.edu.pk', 'Ubaid', 'https://res.cloudinary.com/student1234567/image/upload/v1571164297/IMG_20190505_163303_967.jpg', false, false, 'Rehman', '2019-10-17 23:05:12', 'ur', '1234'),
+       ('2019-09-01 20:05:12', 'kkhan.bese16seecs@seecs.edu.pk', 'Kashif', 'https://res.cloudinary.com/student1234567/image/upload/v1571141876/demo/IMG_20190524_230103.jpg', false, false, 'Khan', '2019-10-17 23:05:12', 'Nazir', '1234'),
+       ('2019-09-01 20:05:12', 'mfarooq.bese16seecs@seecs.edu.pk', 'Muhammad', 'https://res.cloudinary.com/student1234567/image/upload/v1571141876/demo/IMG_20190524_225912.jpg', false, false, 'Farooq', '2019-10-17 23:05:12', 'Ahsan', '1234');
