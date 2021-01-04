@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.ubaid.jconnect.restapi.model.AuthUser;
 import com.ubaid.jconnect.restapi.model.User;
 
-@FeignClient(contextId = "user-service-client", name = "api-gateway-server")
+@FeignClient(contextId = "user-service-client", name = "api-gateway")
 public interface UserProxy
 {
-	@GetMapping("user-service/jtech/users/by/id/{userId}")
+	@GetMapping("jtech/users/by/id/{userId}")
 	User getUserById(@PathVariable("userId") Long id);
 
-	@GetMapping("user-service/jtech/users/by/email/{userEmail}")
+	@GetMapping("jtech/users/by/email/{userEmail}")
 	User getUserByEmail(@PathVariable("userEmail") String email);
 
-	@GetMapping("user-service/jtech/users")
+	@GetMapping("jtech/users")
 	List<User> getUsers();
 	
-	@PostMapping("user-service/jtech/users/auth")
+	@PostMapping("jtech/users/auth")
 	User authUser(@RequestBody AuthUser user);
 	
-	@PostMapping("user-service/jtech/users")
+	@PostMapping("jtech/users")
 	User createUser(@RequestBody AuthUser user);
 
 }

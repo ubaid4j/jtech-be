@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ubaid.jconnect.restapi.model.Notification;
 
-@FeignClient(contextId = "notification-service-client", name = "api-gateway-server")
+@FeignClient(contextId = "notification-service-client", name = "api-gateway")
 public interface NotificationProxy {
-	@PostMapping("notification-service/jtech/notifications/")
+	@PostMapping("jtech/notifications/")
 	Notification saveOrUpdateNotification(@RequestBody Notification notification);
 	
-	@GetMapping("notification-service/jtech/notifications/by/user/{userId}")
+	@GetMapping("jtech/notifications/by/user/{userId}")
 	List<Notification> getAllUnseenNotificationsByUser(@PathVariable("userId") Long userId);
 
-	@GetMapping("notification-service/jtech/notifications/update/by/user/{userId}/session/{sessionId}")	
+	@GetMapping("jtech/notifications/update/by/user/{userId}/session/{sessionId}")
 	List<Notification> updateAllUnseenNotificationsByUserAndSession(@PathVariable("userId") Long userId, @PathVariable("sessionId") Long sessionId);
 }

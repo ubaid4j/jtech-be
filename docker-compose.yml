@@ -17,7 +17,7 @@ services:
     session-service:
         container_name: jconnect-session-service
         build:
-            context: session
+            context: sessions
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -47,7 +47,7 @@ services:
     notification-service:
         container_name: jconnect-notification-service
         build:
-            context: notification
+            context: notifications
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
