@@ -1,9 +1,10 @@
 version: '3.5'
 
 services:
-    api-gateway-server:
+    api-gateway-service:
+        container_name: jconnect-api-gateway-service
         build:
-            context: apiGatewayServer
+            context: api-gateway
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -14,8 +15,9 @@ services:
         networks:
             - jconnect-net
     session-service:
+        container_name: jconnect-session-service
         build:
-            context: sessionService
+            context: sessions
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -26,10 +28,11 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
     message-service:
+        container_name: jconnect-message-service
         build:
-            context: messageService
+            context: messages
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -40,10 +43,11 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
     notification-service:
+        container_name: jconnect-notification-service
         build:
-            context: notificationService
+            context: notifications
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -54,10 +58,11 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
     user-service:
+        container_name: jconnect-user-service
         build:
-            context: userService
+            context: users
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -66,12 +71,13 @@ services:
         ports:
             - 8600:8600
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
         networks:
             - jconnect-net
-    chatclient-service:
+    rest-api:
+        container_name: jconnect-rest-api
         build:
-            context: chatClientService
+            context: rest-api
             dockerfile: Dockerfile
         volumes:
             - jconnect-services-vol:/tmp
@@ -82,7 +88,7 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
 volumes:
     jconnect-services-vol:
         name: jconnect-services-vol
