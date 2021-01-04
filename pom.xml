@@ -21,8 +21,8 @@
         <module>api-gateway</module>
         <module>rest-api</module>
         <module>messages</module>
-        <module>notification</module>
-        <module>session</module>
+        <module>notifications</module>
+        <module>sessions</module>
         <module>users</module>
     </modules>
 
