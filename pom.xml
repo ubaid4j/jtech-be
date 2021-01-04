@@ -16,10 +16,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>config-server</module>
+        <module>naming-server</module>
         <module>api-gateway</module>
         <module>rest-api</module>
         <module>messages</module>
-        <module>naming-server</module>
         <module>notification</module>
         <module>session</module>
         <module>users</module>
@@ -64,12 +65,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
     </dependencies>

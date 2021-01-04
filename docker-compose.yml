@@ -1,7 +1,8 @@
 version: '3.5'
 
 services:
-    api-gateway-server:
+    api-gateway-service:
+        container_name: jconnect-api-gateway-service
         build:
             context: api-gateway
             dockerfile: Dockerfile
@@ -14,6 +15,7 @@ services:
         networks:
             - jconnect-net
     session-service:
+        container_name: jconnect-session-service
         build:
             context: session
             dockerfile: Dockerfile
@@ -26,8 +28,9 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
     message-service:
+        container_name: jconnect-message-service
         build:
             context: messages
             dockerfile: Dockerfile
@@ -40,8 +43,9 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
     notification-service:
+        container_name: jconnect-notification-service
         build:
             context: notification
             dockerfile: Dockerfile
@@ -54,8 +58,9 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
     user-service:
+        container_name: jconnect-user-service
         build:
             context: users
             dockerfile: Dockerfile
@@ -66,10 +71,11 @@ services:
         ports:
             - 8600:8600
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
         networks:
             - jconnect-net
     rest-api:
+        container_name: jconnect-rest-api
         build:
             context: rest-api
             dockerfile: Dockerfile
@@ -82,7 +88,7 @@ services:
         networks:
             - jconnect-net
         depends_on:
-            - api-gateway-server
+            - api-gateway-service
 volumes:
     jconnect-services-vol:
         name: jconnect-services-vol
