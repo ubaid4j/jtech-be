@@ -19,10 +19,21 @@ services:
             - "9411"
         networks:
             - jconnect-net
+    config-server:
+        container_name: jconnnect-config-server
+        build:
+            context: ../config-server
+            dockerfile: Dockerfile
+        expose:
+            - 8888
+        ports:
+            - 8888:8888
+        networks:
+            - jconnect-net
     naming-server:
         container_name: jconnect-naming-server
         build:
-            context: ../eurekaNamingServer
+            context: ../naming-server
             dockerfile: Dockerfile
         networks:
             - jconnect-net
@@ -39,7 +50,7 @@ services:
             MYSQL_PASSWORD: 'password'
             MYSQL_ROOT_PASSWORD: 'password'
         ports:
-            - '3310:3306'
+            - '3336:3306'
         expose:
             - '3306'
         volumes:
