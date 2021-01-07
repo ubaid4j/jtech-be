@@ -37,6 +37,13 @@
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 
+		<!--        Sending Logs to Logstash    -->
+		<dependency>
+			<groupId>com.github.piomin</groupId>
+			<artifactId>reactive-logstash-logging-spring-boot-starter</artifactId>
+			<version>1.3.0.RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
