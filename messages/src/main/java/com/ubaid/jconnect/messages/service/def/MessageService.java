@@ -5,15 +5,15 @@ import com.ubaid.jconnect.messages.entity.Message;
 import java.util.List;
 
 public interface MessageService {
-	public List<Message> getAllBySessionId(Long sessionId);
-	public Message saveMessage(Message message);
-	public List<Message> updateMessages(List<Message> messages);
+	List<Message> getAllBySessionId(Long sessionId);
+	Message saveMessage(Message message);
+	List<Message> updateMessages(List<Message> messages);
 	/**
 	 * 
-	 * @param sessionId
-	 * @param userId
+	 * @param sessionId sessionId
+	 * @param userId userId
 	 * @return all messages of the session and user id which is not received to the counter part session partner
 	 */
-	public List<Message> getReceivedMessages(Long sessionId, Long userId);
+	List<Message> getReceivedMessages(Long sessionId, Long userId);
 
 }

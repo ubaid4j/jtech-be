@@ -14,10 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface NotificationRepo extends JpaRepository<Notification, Long> {
 	
 	@Query(value = "select * from notification where receiver_id = :userId and is_seen is false", nativeQuery = true)
-	public List<Notification> getAllNotSeenNotificationsOfUser(@Param("userId") Long id);
+	List<Notification> getAllNotSeenNotificationsOfUser(@Param("userId") Long id);
 	
 	@Transactional
 	@Modifying
 	@Query(value = "update notification set is_seen = true where receiver_id = :userId and session_id = :sessionId", nativeQuery = true)
-	public Integer updateUnSeenNotifications(@Param("userId") Long userId, @Param("sessionId") Long sessionId);
+	Integer updateUnSeenNotifications(@Param("userId") Long userId, @Param("sessionId") Long sessionId);
 }

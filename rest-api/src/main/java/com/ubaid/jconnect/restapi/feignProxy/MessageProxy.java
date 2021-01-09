@@ -13,17 +13,17 @@ import com.ubaid.jconnect.restapi.model.Message;
 
 @FeignClient(contextId = "message-client", name = "api-gateway")
 public interface MessageProxy {
-	
-	@GetMapping("jtech/messages/by/session/{id}")
-	List<Message> getConversationBySessionId(@PathVariable("id") Long sessionId);
-	
-	@PostMapping("jtech/messages/by/session")
-	Message saveMessage(@RequestBody Message message);
-	
-	@GetMapping("jtech/messages/by/session/{sessionId}/user/{userId}")
-	List<Message> getAllReceivedMessage(@PathVariable("sessionId") Long sessionId,
-										@PathVariable("userId") Long userId);
-	
-	@PutMapping("jtech/messages/by/session")
-	List<Message> updateReceivedMessages(@RequestBody List<Message> messages);
+
+    @GetMapping("jtech/messages/by/session/{id}")
+    List<Message> getConversationBySessionId(@PathVariable("id") Long sessionId);
+
+    @PostMapping("jtech/messages/by/session")
+    Message saveMessage(@RequestBody Message message);
+
+    @GetMapping("jtech/messages/by/session/{sessionId}/user/{userId}")
+    List<Message> getAllReceivedMessage(@PathVariable("sessionId") Long sessionId,
+                                        @PathVariable("userId") Long userId);
+
+    @PutMapping("jtech/messages/by/session")
+    List<Message> updateReceivedMessages(@RequestBody List<Message> messages);
 }

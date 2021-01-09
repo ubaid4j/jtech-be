@@ -2,7 +2,7 @@ package com.ubaid.jconnect.restapi.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,38 +21,32 @@ import com.ubaid.jconnect.restapi.model.User;
 @RestController
 @RequestMapping("jtech/sessions")
 @CrossOrigin("*")
-public class SessionController
-{
-	@Autowired
-	private SessionProxy sessionProxy;
-	
-	@Autowired
-	private UserProxy userProxy;
-	
-	@GetMapping("/{senderId}")
-	public ResponseEntity<List<Session>> getSessionsBySenderId(@PathVariable("senderId") Long senderId)
-	{
-		List<Session> sessions = sessionProxy.getSessionsBySenderId(senderId);
-		List<User> users = userProxy.getUsers();
-		sessions.parallelStream().forEach(s -> {
-			s.setSender(users);
-			s.setReciever(users);
-		});
-		return new ResponseEntity<List<Session>>(sessions, HttpStatus.OK);
-	}
-	
-	@GetMapping("/{sessionId}/user/{userId}/active/{active}")
-	public ResponseEntity<Session> setUserActive(@PathVariable("sessionId") Long sessionId,
-			@PathVariable("userId") Long userId, @PathVariable("active") Boolean active)
-	{
-		return ResponseEntity.ok(sessionProxy.setUserActive(sessionId, userId, active));
-	}
-	
-	@PostMapping("")
-	public ResponseEntity<Session> createSession(@RequestBody Session session)
-	{
-		System.err.println(session);
-		return ResponseEntity.ok(sessionProxy.createSession(session));
-	}
-	
+@RequiredArgsConstructor
+public class SessionController {
+    private final SessionProxy sessionProxy;
+    private final UserProxy userProxy;
+
+    @GetMapping("/{senderId}")
+    public ResponseEntity<List<Session>> getSessionsBySenderId(@PathVariable("senderId") Long senderId) {
+        List<Session> sessions = sessionProxy.getSessionsBySenderId(senderId);
+        List<User> users = userProxy.getUsers();
+        sessions.parallelStream().forEach(s -> {
+            s.setSender(users);
+            s.setReceiver(users);
+        });
+        return new ResponseEntity<>(sessions, HttpStatus.OK);
+    }
+
+    @GetMapping("/{sessionId}/user/{userId}/active/{active}")
+    public ResponseEntity<Session> setUserActive(@PathVariable("sessionId") Long sessionId,
+                                                 @PathVariable("userId") Long userId, @PathVariable("active") Boolean active) {
+        return ResponseEntity.ok(sessionProxy.setUserActive(sessionId, userId, active));
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Session> createSession(@RequestBody Session session) {
+        System.err.println(session);
+        return ResponseEntity.ok(sessionProxy.createSession(session));
+    }
+
 }

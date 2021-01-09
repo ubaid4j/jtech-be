@@ -18,7 +18,7 @@ public class ExceptionController
 		String message = exp.getMessage();
 		long timeStamp = System.currentTimeMillis();
 		ExceptionBody status = new ExceptionBody(HttpStatus.NOT_FOUND.value(), message, timeStamp);
-		return new ResponseEntity<ExceptionBody>(status, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler
@@ -29,7 +29,7 @@ public class ExceptionController
 		int httpStatus = HttpStatus.BAD_REQUEST.value();
 		HttpStatus header = HttpStatus.BAD_REQUEST;
 		ExceptionBody body = new ExceptionBody(httpStatus, message, timeStamp);
-		return new ResponseEntity<ExceptionBody>(body, header);
+		return new ResponseEntity<>(body, header);
 	}
 
 }

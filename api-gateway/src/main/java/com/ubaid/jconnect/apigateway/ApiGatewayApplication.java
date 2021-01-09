@@ -21,9 +21,9 @@ public class ApiGatewayApplication {
 				.route(r -> r.path("/jtech/messages/**")
 						.uri("lb://MESSAGES"))
 				.route(r -> r.path("/jtech/notifications/**")
-						.uri("lb://NOTIFICATION"))
+						.uri("lb://NOTIFICATIONS"))
 				.route(r -> r.path("/jtech/sessions/**")
-						.uri("lb://SESSION"))
+						.uri("lb://SESSIONS"))
 				.route(r -> r.path("/jtech/users/**")
 						.uri("lb://USERS"))
 				.build();

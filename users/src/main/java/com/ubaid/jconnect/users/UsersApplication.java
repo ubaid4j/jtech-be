@@ -9,13 +9,12 @@ import brave.sampler.Sampler;
 @SpringBootApplication
 public class UsersApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UsersApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(UsersApplication.class, args);
+    }
 
-	@Bean
-	public Sampler defaultSampler()
-	{
-		return Sampler.ALWAYS_SAMPLE;
-	}
+    @Bean
+    public Sampler defaultSampler() {
+        return Sampler.ALWAYS_SAMPLE;
+    }
 }
