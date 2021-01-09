@@ -12,12 +12,12 @@ import com.ubaid.jconnect.restapi.model.Notification;
 
 @FeignClient(contextId = "notification-service-client", name = "api-gateway")
 public interface NotificationProxy {
-	@PostMapping("jtech/notifications/")
-	Notification saveOrUpdateNotification(@RequestBody Notification notification);
-	
-	@GetMapping("jtech/notifications/by/user/{userId}")
-	List<Notification> getAllUnseenNotificationsByUser(@PathVariable("userId") Long userId);
+    @PostMapping("jtech/notifications/")
+    Notification saveOrUpdateNotification(@RequestBody Notification notification);
 
-	@GetMapping("jtech/notifications/update/by/user/{userId}/session/{sessionId}")
-	List<Notification> updateAllUnseenNotificationsByUserAndSession(@PathVariable("userId") Long userId, @PathVariable("sessionId") Long sessionId);
+    @GetMapping("jtech/notifications/by/user/{userId}")
+    List<Notification> getAllUnseenNotificationsByUser(@PathVariable("userId") Long userId);
+
+    @GetMapping("jtech/notifications/update/by/user/{userId}/session/{sessionId}")
+    List<Notification> updateAllUnseenNotificationsByUserAndSession(@PathVariable("userId") Long userId, @PathVariable("sessionId") Long sessionId);
 }
