@@ -5,48 +5,40 @@ import java.util.Date;
 import java.util.List;
 
 import com.ubaid.jconnect.messages.service.def.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.ubaid.jconnect.messages.dao.MessageRepo;
 import com.ubaid.jconnect.messages.entity.Message;
 
 @Service
-public class MessageServiceImp implements MessageService
-{
+@RequiredArgsConstructor
+public class MessageServiceImp implements MessageService {
+    private final MessageRepo repo;
 
-	@Autowired
-	private MessageRepo repo;
-	
-	@Override
-	public List<Message> getAllBySessionId(Long sessionId)
-	{
-		return repo.findAllBySessionId(sessionId);
-	}
+    @Override
+    public List<Message> getAllBySessionId(Long sessionId) {
+        return repo.findAllBySessionId(sessionId);
+    }
 
-	@Override
-	public Message saveMessage(Message message)
-	{
-		return repo.save(message);
-	}
+    @Override
+    public Message saveMessage(Message message) {
+        return repo.save(message);
+    }
 
-	@Override
-	public List<Message> getReceivedMessages(Long sessionId, Long userId) {
-		return repo.findRecievedMessage(sessionId, userId);
-	}
+    @Override
+    public List<Message> getReceivedMessages(Long sessionId, Long userId) {
+        return repo.findReceivedMessage(sessionId, userId);
+    }
 
-	@Override
-	public List<Message> updateMessages(List<Message> messages) {
-		messages.forEach(m -> m.setRecievedTime(getCurrentTimestamp()));
-		return repo.saveAll(messages);
-	}
-	
-	private Timestamp getCurrentTimestamp()
-	{
-		Date date= new Date();		 
-		Timestamp ts = new Timestamp(date.getTime());
-		return ts;
-	}
+    @Override
+    public List<Message> updateMessages(List<Message> messages) {
+        messages.forEach(m -> m.setReceivedTime(getCurrentTimestamp()));
+        return repo.saveAll(messages);
+    }
 
-
+    private Timestamp getCurrentTimestamp() {
+        Date date = new Date();
+        return new Timestamp(date.getTime());
+    }
 }

@@ -13,5 +13,5 @@ public interface MessageRepo extends JpaRepository<Message, Long> {
 	List<Message> findAllBySessionId(@Param("sessionId") Long sessionId);
 	
 	@Query(value = "select * from message where session_id = :sessionId and owner_id = :userId and receieved_time is null order by sent_time;", nativeQuery = true)
-	List<Message> findRecievedMessage(@Param("sessionId") Long sessionId, @Param("userId") Long userId);
+	List<Message> findReceivedMessage(@Param("sessionId") Long sessionId, @Param("userId") Long userId);
 }
