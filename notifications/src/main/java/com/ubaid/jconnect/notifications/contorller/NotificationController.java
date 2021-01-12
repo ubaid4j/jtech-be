@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ubaid.jconnect.notifications.entity.Notification;
-import com.ubaid.jconnect.notifications.service.def.NotificationService;
+import com.ubaid.jconnect.notifications.service.NotificationService;
 
 @RestController
 @RequestMapping("/jtech/notifications")

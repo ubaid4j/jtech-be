@@ -1,4 +1,4 @@
-package com.ubaid.jconnect.messages.service.def;
+package com.ubaid.jconnect.messages.service;
 
 import com.ubaid.jconnect.messages.entity.Message;
 
