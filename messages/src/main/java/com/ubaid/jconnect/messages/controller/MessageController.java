@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ubaid.jconnect.messages.entity.Message;
-import com.ubaid.jconnect.messages.service.def.MessageService;
+import com.ubaid.jconnect.messages.service.MessageService;
 
 @RestController
 @RequestMapping("/jtech/messages")

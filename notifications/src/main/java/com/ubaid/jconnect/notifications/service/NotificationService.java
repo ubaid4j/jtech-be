@@ -1,4 +1,4 @@
-package com.ubaid.jconnect.notifications.service.def;
+package com.ubaid.jconnect.notifications.service;
 
 import java.util.List;
 

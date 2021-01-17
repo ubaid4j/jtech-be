@@ -3,7 +3,6 @@ package com.ubaid.jconnect.notifications.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ubaid.jconnect.notifications.service.def.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
