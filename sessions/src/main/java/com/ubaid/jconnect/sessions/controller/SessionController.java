@@ -58,7 +58,6 @@ public class SessionController {
 
     @PostMapping("")
     public ResponseEntity<Session> createSession(@RequestBody Session session) {
-        System.err.println(session);
         return ResponseEntity.ok(sessionService.createSession(session));
     }
 

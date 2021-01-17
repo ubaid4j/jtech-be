@@ -2,8 +2,8 @@ package com.ubaid.jconnect.restapi.controller;
 
 import java.util.List;
 
-import com.ubaid.jconnect.restapi.feignProxy.UserProxy;
 import com.ubaid.jconnect.restapi.model.User;
+import com.ubaid.jconnect.restapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ubaid.jconnect.restapi.exception.JTechException;
 import com.ubaid.jconnect.restapi.model.AuthUser;
 
 @RestController
@@ -23,30 +22,26 @@ import com.ubaid.jconnect.restapi.model.AuthUser;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserProxy userProxy;
+
+    private final UserService userService;
 
     @GetMapping("/by/email/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
-        if (email == null)
-            throw new JTechException("Enter a email");
-        return new ResponseEntity<>(userProxy.getUserByEmail(email), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {
-        System.out.println("Line 38 UserController at Chat Client Service");
-        return new ResponseEntity<>(userProxy.getUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     @PostMapping("/auth")
     public ResponseEntity<User> authUser(@RequestBody AuthUser user) {
-        System.err.println(user);
-        return ResponseEntity.ok(userProxy.authUser(user));
+        return ResponseEntity.ok(userService.authUser(user));
     }
 
     @PostMapping("/")
     public ResponseEntity<User> createUser(@RequestBody AuthUser user) {
-        System.err.println(user);
-        return ResponseEntity.ok(userProxy.createUser(user));
+        return ResponseEntity.ok(userService.createUser(user));
     }
 }

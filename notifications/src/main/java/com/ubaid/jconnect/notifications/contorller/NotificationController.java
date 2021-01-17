@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ubaid.jconnect.notifications.entity.Notification;
-import com.ubaid.jconnect.notifications.service.def.NotificationService;
+import com.ubaid.jconnect.notifications.service.NotificationService;
 
 @RestController
 @RequestMapping("/jtech/notifications")
@@ -33,8 +33,6 @@ public class NotificationController {
 
     @GetMapping("/update/by/user/{userId}/session/{sessionId}")
     public ResponseEntity<List<Notification>> setAllUnseenNotificationSeen(@PathVariable("userId") Long userId, @PathVariable("sessionId") Long sessionId) {
-        System.err.println(userId);
-        System.err.println(sessionId);
         return ResponseEntity.ok(service.setAllUnseenNotificationsSeen(userId, sessionId));
     }
 }
