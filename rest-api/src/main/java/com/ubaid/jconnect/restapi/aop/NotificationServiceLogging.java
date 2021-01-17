@@ -1,6 +1,6 @@
-package com.ubaid.jconnect.notifications.aop;
+package com.ubaid.jconnect.restapi.aop;
 
-import com.ubaid.jconnect.notifications.entity.Notification;
+import com.ubaid.jconnect.restapi.model.Notification;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Slf4j
 @Component
 @Aspect
-public class Logging extends TargetMethods {
+@Slf4j
+public class NotificationServiceLogging extends TargetMethods {
 
-    @Around("getAllUnseenNotificationsOfUser()")
+    @Around("getAllUnseenNotificationsByUser()")
     public List<?> logGetAllBySessionIdMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         Long userId = (Long) args[0];
@@ -44,7 +44,7 @@ public class Logging extends TargetMethods {
         }
     }
 
-    @Around("setAllUnseenNotificationsSeen()")
+    @Around("updateAllUnseenNotificationsByUserAndSession()")
     public List<?> logSaveMessageMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         Long userId = (Long) args[0];
@@ -59,4 +59,5 @@ public class Logging extends TargetMethods {
             throw new RuntimeException(exp.getMessage());
         }
     }
+
 }

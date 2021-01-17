@@ -2,9 +2,8 @@ package com.ubaid.jconnect.restapi.controller;
 
 import java.util.List;
 
-import com.ubaid.jconnect.restapi.feignProxy.NotificationProxy;
+import com.ubaid.jconnect.restapi.service.NotificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +19,16 @@ import com.ubaid.jconnect.restapi.model.Notification;
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private final NotificationProxy proxy;
+    private final NotificationService notificationService;
 
     @GetMapping("/by/user/{userId}")
     public ResponseEntity<List<Notification>> getAllUnseenNotificationsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.ok(proxy.getAllUnseenNotificationsByUser(userId));
+        return ResponseEntity.ok(notificationService.getAllUnseenNotificationsByUser(userId));
     }
 
     @GetMapping("update/by/user/{userId}/session/{sessionId}")
     public ResponseEntity<List<Notification>> updateAllUnseenNotificationsByUserAndSession(@PathVariable("userId") Long userId, @PathVariable("sessionId") Long sessionId) {
-        return ResponseEntity.ok(proxy.updateAllUnseenNotificationsByUserAndSession(userId, sessionId));
+        return ResponseEntity.ok(notificationService.updateAllUnseenNotificationsByUserAndSession(userId, sessionId));
     }
 
 }

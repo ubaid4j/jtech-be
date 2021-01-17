@@ -50,7 +50,6 @@ public class UserController {
 
     @PostMapping("/auth")
     public ResponseEntity<User> getUser(@RequestBody AuthUser user) {
-        System.err.println(user);
         return ResponseEntity.ok(userService.findUserByEmailAndPasswor(user.getEmail(), user.getPassword()));
     }
 

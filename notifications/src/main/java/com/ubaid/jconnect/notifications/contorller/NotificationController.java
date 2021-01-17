@@ -33,8 +33,6 @@ public class NotificationController {
 
     @GetMapping("/update/by/user/{userId}/session/{sessionId}")
     public ResponseEntity<List<Notification>> setAllUnseenNotificationSeen(@PathVariable("userId") Long userId, @PathVariable("sessionId") Long sessionId) {
-        System.err.println(userId);
-        System.err.println(sessionId);
         return ResponseEntity.ok(service.setAllUnseenNotificationsSeen(userId, sessionId));
     }
 }
