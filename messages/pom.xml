@@ -56,6 +56,16 @@
 		</dependency>
 
 
+		<!--		Liquibase 	-->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jaxb-annotations</artifactId>
+		</dependency>
+
 	</dependencies>
 
 </project>
