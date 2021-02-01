@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface MessageRepo extends JpaRepository<Message, Long> {
 
-	@Query(value = "select * from message where session_id = :sessionId and receieved_time is not null", nativeQuery = true)
+	@Query(value = "select * from message where session_id = :sessionId and received_time is not null", nativeQuery = true)
 	List<Message> findAllBySessionId(@Param("sessionId") Long sessionId);
 	
-	@Query(value = "select * from message where session_id = :sessionId and owner_id = :userId and receieved_time is null order by sent_time;", nativeQuery = true)
+	@Query(value = "select * from message where session_id = :sessionId and owner_id = :userId and received_time is null order by sent_time;", nativeQuery = true)
 	List<Message> findReceivedMessage(@Param("sessionId") Long sessionId, @Param("userId") Long userId);
 }
